@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CROSBY — Cronômetro</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+
+  :root{
+    --bg: #05070f;
+    --bg-2: #070a15;
+    --blue: #4f9dff;
+    --blue-soft: #8fb8ff;
+    --gold: #f2b544;
+    --gold-soft: #f6c86a;
+    --white: #f5f7fb;
+    --line: rgba(255,255,255,0.08);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{
+    height:100%;
+    width:100%;
+    background: #020308;
+    color: var(--white);
+    font-family: 'Oswald', sans-serif;
+    overflow: hidden;
+  }
+
+  .viewport{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: #020308;
+  }
+
+  .stage{
+    width: 540px;
+    height: 1040px;
+    flex-shrink:0;
+    background: radial-gradient(ellipse at top, #0a0e1c 0%, var(--bg) 55%, #020308 100%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-evenly;
+    padding: 30px 32px;
+    transform-origin: center center;
+  }
+
+  .brand{
+    display:flex;
+    align-items:baseline;
+    letter-spacing: 0.35em;
+    font-size: 42px;
+    font-weight:700;
+  }
+  .brand .dot{ color:#e8394a; margin-left:2px; }
+
+  .panel{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .icon-row{ margin-bottom: 8px; }
+  .icon-row svg{ width: 34px; height:auto; }
+
+  .kicker{
+    font-size: 19px;
+    font-weight:600;
+    letter-spacing: 0.28em;
+    margin-bottom: 4px;
+  }
+  .kicker.blue{ color: var(--blue-soft); }
+  .kicker.gold{ color: var(--gold-soft); }
+
+  .sub{
+    font-size: 12px;
+    font-weight:500;
+    letter-spacing: 0.22em;
+    opacity:0.65;
+    margin-bottom: 14px;
+  }
+
+  .clock{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    letter-spacing: 0.03em;
+    line-height:1;
+    background: linear-gradient(180deg, #ffffff 0%, #cfd6e6 55%, #9aa4bb 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color: transparent;
+    filter: drop-shadow(0 0 18px rgba(255,255,255,0.08));
+  }
+
+  .divider{
+    width: 60%;
+    max-width: 380px;
+    height:1px;
+    margin: 16px 0;
+    background: linear-gradient(90deg, transparent, var(--line-color, rgba(255,255,255,0.35)), transparent);
+  }
+
+  .restante-label{
+    font-size: 13px;
+    font-weight:600;
+    letter-spacing: 0.28em;
+    margin-bottom: 10px;
+  }
+  .restante-label.blue{ color: var(--blue-soft); }
+  .restante-label.gold{ color: var(--gold-soft); }
+
+  .countdown{
+    display:flex;
+    align-items:flex-end;
+    gap: 8px;
+  }
+  .countdown .unit{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .countdown .num{
+    font-family:'Bebas Neue', sans-serif;
+    font-size: 82px;
+    line-height:1;
+    background: linear-gradient(180deg, #ffffff 0%, #d7dbe8 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    min-width: 1.1ch;
+    text-align:center;
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown .colon{
+    font-family:'Bebas Neue', sans-serif;
+    font-size: 82px;
+    line-height:1;
+    color: rgba(255,255,255,0.35);
+    padding-bottom: 0.05em;
+  }
+  .countdown .lbl{
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    font-weight:500;
+  }
+  .countdown .lbl.blue{ color: var(--blue-soft); opacity:0.8; }
+  .countdown .lbl.gold{ color: var(--gold-soft); opacity:0.85; }
+
+  .msgbox{
+    margin-top: 16px;
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    border:1px solid var(--box-color, rgba(255,255,255,0.25));
+    border-radius: 4px;
+    padding: 12px 20px;
+    max-width: 470px;
+  }
+  .msgbox svg{ width: 24px; flex-shrink:0; }
+  .msgbox .txt{
+    text-align:left;
+    font-size: 14px;
+    font-weight:500;
+    letter-spacing: 0.05em;
+    line-height:1.5;
+  }
+  .msgbox.blue{ border-color: rgba(79,157,255,0.35); }
+  .msgbox.blue .txt{ color: var(--blue-soft); }
+  .msgbox.gold{ border-color: rgba(242,181,68,0.45); background: rgba(242,181,68,0.05); }
+  .msgbox.gold .txt{ color: var(--gold-soft); }
+  .msgbox.done{
+    border-color: rgba(80,220,140,0.5);
+    background: rgba(80,220,140,0.06);
+  }
+  .msgbox.done .txt{ color: #7be8ab; }
+
+  .rule{
+    width:80%;
+    max-width: 460px;
+    height:1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .footer{
+    text-align:center;
+    opacity:0.55;
+  }
+  .footer .l1, .footer .l2{
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    font-weight:500;
+  }
+  .footer .l3{
+    margin-top: 6px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold-soft);
+    opacity:0.9;
+  }
+</style>
+</head>
+<body>
+<div class="viewport">
+<div class="stage" id="stage">
+
+  <div class="brand">CROSBY<span class="dot">.</span></div>
+
+  <!-- CLT -->
+  <div class="panel">
+    <div class="icon-row">
+      <svg viewBox="0 0 64 64" fill="none" stroke="var(--blue)" stroke-width="2.2">
+        <path d="M22 10 L32 16 L42 10 L52 18 L46 26 L42 24 V54 H22 V24 L18 26 L12 18 Z" stroke-linejoin="round" stroke-linecap="round"/>
+        <line x1="27" y1="9" x2="37" y2="9" stroke-linecap="round"/>
+        <path d="M27 9 Q32 3 37 9" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="kicker blue">HORÁRIO DO CLT</div>
+    <div class="sub">SAÍDA DO EXPEDIENTE</div>
+    <div class="clock">18:00</div>
+    <div class="divider" style="--line-color: rgba(79,157,255,0.45)"></div>
+    <div class="restante-label blue">TEMPO RESTANTE</div>
+    <div class="countdown" id="clt-countdown">
+      <div class="unit"><span class="num" id="clt-h">00</span><span class="lbl blue">HORAS</span></div>
+      <div class="colon">:</div>
+      <div class="unit"><span class="num" id="clt-m">00</span><span class="lbl blue">MINUTOS</span></div>
+      <div class="colon">:</div>
+      <div class="unit"><span class="num" id="clt-s">00</span><span class="lbl blue">SEGUNDOS</span></div>
+    </div>
+    <div class="msgbox blue" id="clt-msgbox">
+      <svg viewBox="0 0 40 40" fill="none" stroke="var(--blue)" stroke-width="2">
+        <rect x="6" y="14" width="28" height="18" rx="2"/>
+        <path d="M14 14 V10 a4 4 0 0 1 4 -4 h4 a4 4 0 0 1 4 4 v4"/>
+        <line x1="6" y1="21" x2="34" y2="21"/>
+      </svg>
+      <div class="txt" id="clt-msg">CONTINUE FOCADO.<br>O MELHOR RESULTADO VEM DA DISCIPLINA.</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- LOUCOS -->
+  <div class="panel">
+    <div class="icon-row">
+      <svg viewBox="0 0 40 40" fill="var(--gold)"><path d="M22 2 L10 22 H18 L16 38 L30 16 H21 Z"/></svg>
+    </div>
+    <div class="kicker gold">HORÁRIO DOS LOUCOS</div>
+    <div class="sub" id="loucos-sub">SAÍDA DOS LOUCOS — DIA 01</div>
+    <div class="clock">00:00</div>
+    <div class="divider" style="--line-color: rgba(242,181,68,0.5)"></div>
+    <div class="restante-label gold">TEMPO RESTANTE</div>
+    <div class="countdown" id="loucos-countdown">
+      <div class="unit"><span class="num" id="loucos-h">00</span><span class="lbl gold">HORAS</span></div>
+      <div class="colon">:</div>
+      <div class="unit"><span class="num" id="loucos-m">00</span><span class="lbl gold">MINUTOS</span></div>
+      <div class="colon">:</div>
+      <div class="unit"><span class="num" id="loucos-s">00</span><span class="lbl gold">SEGUNDOS</span></div>
+    </div>
+    <div class="msgbox gold" id="loucos-msgbox">
+      <svg viewBox="0 0 40 40" fill="none" stroke="var(--gold)" stroke-width="2">
+        <path d="M12 6 h16 v8 a8 8 0 0 1 -16 0 Z"/>
+        <path d="M12 8 H6 a2 2 0 0 0 -2 2 c0 5 4 8 8 8"/>
+        <path d="M28 8 h6 a2 2 0 0 1 2 2 c0 5 -4 8 -8 8"/>
+        <line x1="20" y1="22" x2="20" y2="30"/>
+        <line x1="13" y1="34" x2="27" y2="34"/>
+        <line x1="20" y1="30" x2="20" y2="34"/>
+      </svg>
+      <div class="txt" id="loucos-msg">FOCO ATÉ O ÚLTIMO SEGUNDO!</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="l1">DISCIPLINA TODOS OS DIAS.</div>
+    <div class="l2">EXCELÊNCIA SEMPRE.</div>
+    <div class="l3">#INSPIRESUCESSO</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function fitStage(){
+  const stage = document.getElementById('stage');
+  const designW = 540, designH = 1040;
+  const scale = Math.min(window.innerWidth / designW, window.innerHeight / designH);
+  stage.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fitStage);
+window.addEventListener('orientationchange', fitStage);
+fitStage();
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function getNextTarget(hour, minute){
+  const now = new Date();
+  const t = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
+  if(now >= t){
+    t.setDate(t.getDate()+1);
+  }
+  return t;
+}
+
+function updateClocks(){
+  const now = new Date();
+
+  // CLT -> hoje às 18:00
+  const cltTarget = getNextTarget(18,0);
+  let cltDiff = cltTarget - now;
+  const cltMsgbox = document.getElementById('clt-msgbox');
+  const cltMsg = document.getElementById('clt-msg');
+  if(cltDiff <= 0){
+    document.getElementById('clt-h').textContent = '00';
+    document.getElementById('clt-m').textContent = '00';
+    document.getElementById('clt-s').textContent = '00';
+    cltMsgbox.classList.remove('blue');
+    cltMsgbox.classList.add('done');
+    cltMsg.innerHTML = 'META BATIDA!<br>TODOS EM CASA!';
+  } else {
+    const h = Math.floor(cltDiff/3600000);
+    const m = Math.floor((cltDiff%3600000)/60000);
+    const s = Math.floor((cltDiff%60000)/1000);
+    document.getElementById('clt-h').textContent = pad(h);
+    document.getElementById('clt-m').textContent = pad(m);
+    document.getElementById('clt-s').textContent = pad(s);
+    if(!cltMsgbox.classList.contains('blue')){
+      cltMsgbox.classList.remove('done');
+      cltMsgbox.classList.add('blue');
+      cltMsg.innerHTML = 'CONTINUE FOCADO.<br>O MELHOR RESULTADO VEM DA DISCIPLINA.';
+    }
+  }
+
+  // LOUCOS -> meia-noite (00:00 do dia seguinte)
+  const loucosTarget = getNextTarget(0,0);
+  let loucosDiff = loucosTarget - now;
+  const loucosMsgbox = document.getElementById('loucos-msgbox');
+  const loucosMsg = document.getElementById('loucos-msg');
+  const loucosSub = document.getElementById('loucos-sub');
+  const dayLabel = String(loucosTarget.getDate()).padStart(2,'0') + '/' + String(loucosTarget.getMonth()+1).padStart(2,'0');
+  loucosSub.textContent = 'SAÍDA DOS LOUCOS — DIA ' + String(loucosTarget.getDate()).padStart(2,'0');
+
+  if(loucosDiff <= 0){
+    document.getElementById('loucos-h').textContent = '00';
+    document.getElementById('loucos-m').textContent = '00';
+    document.getElementById('loucos-s').textContent = '00';
+    loucosMsgbox.classList.remove('gold');
+    loucosMsgbox.classList.add('done');
+    loucosMsg.innerHTML = 'META BATIDA!<br>VITÓRIA DOS LOUCOS!';
+  } else {
+    const h = Math.floor(loucosDiff/3600000);
+    const m = Math.floor((loucosDiff%3600000)/60000);
+    const s = Math.floor((loucosDiff%60000)/1000);
+    document.getElementById('loucos-h').textContent = pad(h);
+    document.getElementById('loucos-m').textContent = pad(m);
+    document.getElementById('loucos-s').textContent = pad(s);
+    if(!loucosMsgbox.classList.contains('gold')){
+      loucosMsgbox.classList.remove('done');
+      loucosMsgbox.classList.add('gold');
+      loucosMsg.innerHTML = 'FOCO ATÉ O ÚLTIMO SEGUNDO!';
+    }
+  }
+}
+
+updateClocks();
+setInterval(updateClocks, 1000);
+</script>
+</body>
+</html>
