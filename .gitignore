@@ -1,3 +1,7 @@
 .vercel
 node_modules
 cronometro_crosby (1).html
+
+# o MP4 de 24h passa de 100 MB, limite do GitHub — gere com tools/gerar-video.ps1
+video/*.mp4
+video/quadro.png
