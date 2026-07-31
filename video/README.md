@@ -10,7 +10,8 @@ desenvolvedor não é uma opção.
 powershell -ExecutionPolicy Bypass -File tools\gerar-video.ps1
 ```
 
-Leva cerca de 48 min e sai em `video/cronometro-24h.mp4` (~170 MB).
+Leva cerca de 27 min e sai em `video/cronometro-24h.mp4` (~217 MB, 86.400
+quadros a 1 fps).
 Para conferir o layout antes, `-Teste` renderiza só os 2 primeiros minutos:
 
 ```bash
