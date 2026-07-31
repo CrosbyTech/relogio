@@ -308,11 +308,19 @@ function getNextTarget(hour, minute){
   return t;
 }
 
+// O CLT precisa zerar e ficar zerado até a virada do dia. Com getNextTarget
+// ele pularia para as 18:00 de amanhã no instante da meta, e o painel voltaria
+// para 23:59:59 em vez de mostrar "META BATIDA".
+function getTargetToday(hour, minute){
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0);
+}
+
 function updateClocks(){
   const now = new Date();
 
   // CLT -> hoje às 18:00
-  const cltTarget = getNextTarget(18,0);
+  const cltTarget = getTargetToday(18,0);
   let cltDiff = cltTarget - now;
   const cltMsgbox = document.getElementById('clt-msgbox');
   const cltMsg = document.getElementById('clt-msg');
@@ -320,9 +328,11 @@ function updateClocks(){
     document.getElementById('clt-h').textContent = '00';
     document.getElementById('clt-m').textContent = '00';
     document.getElementById('clt-s').textContent = '00';
-    cltMsgbox.classList.remove('blue');
-    cltMsgbox.classList.add('done');
-    cltMsg.innerHTML = 'META BATIDA!<br>TODOS EM CASA!';
+    if(!cltMsgbox.classList.contains('done')){
+      cltMsgbox.classList.remove('blue');
+      cltMsgbox.classList.add('done');
+      cltMsg.innerHTML = 'META BATIDA!<br>TODOS EM CASA!';
+    }
   } else {
     const h = Math.floor(cltDiff/3600000);
     const m = Math.floor((cltDiff%3600000)/60000);

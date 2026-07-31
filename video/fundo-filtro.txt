@@ -11,10 +11,6 @@ drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='\:':fontsize=110:fon
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='HORAS':fontsize=20:fontcolor=0x8fb8ff@0.80:x=(250-text_w/2):y=690,
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='MINUTOS':fontsize=20:fontcolor=0x8fb8ff@0.80:x=(480-text_w/2):y=690,
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='SEGUNDOS':fontsize=20:fontcolor=0x8fb8ff@0.80:x=(710-text_w/2):y=690,
-drawbox=x=160:y=740:w=640:h=110:color=0x4f9dff@0.06:t=fill,
-drawbox=x=160:y=740:w=640:h=110:color=0x4f9dff@0.35:t=1,
-drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='CONTINUE FOCADO.':fontsize=28:fontcolor=0x8fb8ff:x=(480-text_w/2):y=766,
-drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='O MELHOR RESULTADO VEM DA DISCIPLINA.':fontsize=28:fontcolor=0x8fb8ff:x=(480-text_w/2):y=806,
 
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='HORÁRIO DOS LOUCOS':fontsize=40:fontcolor=0xf6c86a:x=(1440-text_w/2):y=200,
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='SAÍDA DOS LOUCOS':fontsize=24:fontcolor=0x8a93a8:x=(1440-text_w/2):y=254,

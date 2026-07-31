@@ -1,6 +1,17 @@
-drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:floor(((151200-n)-86400*floor((151200-n)/86400))/3600)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(250-text_w/2):y=540,
-drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:floor(((151200-n)-86400*floor((151200-n)/86400))/60)-60*floor(((151200-n)-86400*floor((151200-n)/86400))/3600)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(480-text_w/2):y=540,
-drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:((151200-n)-86400*floor((151200-n)/86400))-60*floor(((151200-n)-86400*floor((151200-n)/86400))/60)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(710-text_w/2):y=540,
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:floor((((64800-n)+abs(64800-n))/2)/3600)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(250-text_w/2):y=540,
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:floor((((64800-n)+abs(64800-n))/2)/60)-60*floor((((64800-n)+abs(64800-n))/2)/3600)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(480-text_w/2):y=540,
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:(((64800-n)+abs(64800-n))/2)-60*floor((((64800-n)+abs(64800-n))/2)/60)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(710-text_w/2):y=540,
+
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:floor((86400-n)/3600)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(1210-text_w/2):y=540,
 drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:floor((86400-n)/60)-60*floor((86400-n)/3600)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(1440-text_w/2):y=540,
-drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:(86400-n)-60*floor((86400-n)/60)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(1670-text_w/2):y=540
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='%{eif\:(86400-n)-60*floor((86400-n)/60)\:d\:2}':fontsize=130:fontcolor=0xeef1f8:x=(1670-text_w/2):y=540,
+
+drawbox=x=160:y=740:w=640:h=110:color=0x4f9dff@0.06:t=fill:enable='((64800-n)+abs(64800-n))',
+drawbox=x=160:y=740:w=640:h=110:color=0x4f9dff@0.35:t=1:enable='((64800-n)+abs(64800-n))',
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='CONTINUE FOCADO.':fontsize=28:fontcolor=0x8fb8ff:x=(480-text_w/2):y=766:enable='((64800-n)+abs(64800-n))',
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='O MELHOR RESULTADO VEM DA DISCIPLINA.':fontsize=28:fontcolor=0x8fb8ff:x=(480-text_w/2):y=806:enable='((64800-n)+abs(64800-n))',
+
+drawbox=x=160:y=740:w=640:h=110:color=0x50dc8c@0.07:t=fill:enable='((n-64799)+abs(n-64799))',
+drawbox=x=160:y=740:w=640:h=110:color=0x50dc8c@0.45:t=1:enable='((n-64799)+abs(n-64799))',
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='META BATIDA!':fontsize=28:fontcolor=0x7be8ab:x=(480-text_w/2):y=766:enable='((n-64799)+abs(n-64799))',
+drawtext=fontfile='C\:/Windows/Fonts/bahnschrift.ttf':text='TODOS EM CASA!':fontsize=28:fontcolor=0x7be8ab:x=(480-text_w/2):y=806:enable='((n-64799)+abs(n-64799))'

@@ -6,9 +6,13 @@ sub init()
     m.cltNums = [m.top.findNode("cltH"), m.top.findNode("cltM"), m.top.findNode("cltS")]
     m.loucosNums = [m.top.findNode("loucosH"), m.top.findNode("loucosM"), m.top.findNode("loucosS")]
     m.loucosSub = m.top.findNode("loucosSub")
+    m.cltMsg = m.top.findNode("cltMsg")
+    m.cltBox = m.top.findNode("cltBox")
 
-    ' textos com quebra de linha nao cabem no atributo XML
-    m.top.findNode("cltMsg").text = "CONTINUE FOCADO." + Chr(10) + "O MELHOR RESULTADO VEM DA DISCIPLINA."
+    ' -1 garante que a primeira chamada de setCltEstado sempre pinte a caixa
+    m.cltEstado = -1
+
+    ' texto com quebra de linha nao cabe no atributo XML
     m.top.findNode("loucosMsg").text = "FOCO ATÉ O ÚLTIMO SEGUNDO!"
 
     centerBrand()
@@ -35,21 +39,39 @@ sub onTick()
     dt.ToLocalTime()
     nowSec = dt.GetHours() * 3600 + dt.GetMinutes() * 60 + dt.GetSeconds()
 
-    setCountdown(m.cltNums, secsUntil(nowSec, 18 * 3600))
-    setCountdown(m.loucosNums, secsUntil(nowSec, 24 * 3600))
+    ' O CLT trava em zero das 18:00 ate a virada do dia, em vez de rolar para
+    ' as 18:00 de amanha — senao o painel voltaria para 23:59:59 no instante
+    ' em que a meta e batida.
+    cltDiff = 64800 - nowSec
+    if cltDiff < 0 then cltDiff = 0
+    setCountdown(m.cltNums, cltDiff)
+    setCltEstado(cltDiff)
+
+    ' Os Loucos contam ate a meia-noite, que e a propria virada: chega a zero
+    ' e recomeca em 24h no mesmo instante.
+    setCountdown(m.loucosNums, 86400 - nowSec)
 
     tomorrow = CreateObject("roDateTime")
     tomorrow.FromSeconds(dt.AsSeconds() + 86400)
     m.loucosSub.text = "SAÍDA DOS LOUCOS — DIA " + pad(tomorrow.GetDayOfMonth())
 end sub
 
-' Sempre aponta para a proxima ocorrencia do horario: se ja passou hoje,
-' conta para amanha. Mesma regra do getNextTarget() da versao web.
-function secsUntil(nowSec as Integer, targetSec as Integer) as Integer
-    diff = targetSec - nowSec
-    if diff <= 0 then diff = diff + 86400
-    return diff
-end function
+sub setCltEstado(diff as Integer)
+    estado = 0
+    if diff <= 0 then estado = 1
+    if m.cltEstado = estado then return
+    m.cltEstado = estado
+
+    if estado = 1
+        m.cltMsg.text = "META BATIDA!" + Chr(10) + "TODOS EM CASA!"
+        m.cltMsg.color = "0x7be8abFF"
+        m.cltBox.color = "0x50dc8c1f"
+    else
+        m.cltMsg.text = "CONTINUE FOCADO." + Chr(10) + "O MELHOR RESULTADO VEM DA DISCIPLINA."
+        m.cltMsg.color = "0x8fb8ffFF"
+        m.cltBox.color = "0x4f9dff14"
+    end if
+end sub
 
 sub setCountdown(labels as Object, diff as Integer)
     labels[0].text = pad(diff \ 3600)

@@ -72,7 +72,7 @@
       <Font role="font" uri="font:SystemFontFile" size="13" />
     </Label>
 
-    <Rectangle width="500" height="76" color="0x4f9dff14" translation="[70,496]" />
+    <Rectangle id="cltBox" width="500" height="76" color="0x4f9dff14" translation="[70,496]" />
     <Label id="cltMsg" width="460" height="76" horizAlign="center" vertAlign="center" wrap="true"
            color="0x8fb8ffff" translation="[90,496]">
       <Font role="font" uri="font:SystemFontFile" size="17" />
