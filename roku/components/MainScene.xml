@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Layout desenhado no espaco 1280x720 (ui_resolutions=hd).
+  A Roku faz o upscale para 1080p sozinha.
+
+  Coluna esquerda  (CLT):    centro em x=320
+  Coluna direita   (LOUCOS): centro em x=960
+-->
+<component name="MainScene" extends="Scene">
+  <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
+
+  <children>
+
+    <Timer id="tick" repeat="true" duration="1" />
+
+    <!-- marca -->
+    <LayoutGroup id="brand" layoutDirection="horiz" vertAlignment="bottom" itemSpacings="[2]" translation="[540,26]">
+      <Label text="CROSBY" color="0xf5f7fbff">
+        <Font role="font" uri="font:SystemBoldFontFile" size="36" />
+      </Label>
+      <Label text="." color="0xe8394aff">
+        <Font role="font" uri="font:SystemBoldFontFile" size="36" />
+      </Label>
+    </LayoutGroup>
+
+    <!-- linha divisoria entre as colunas -->
+    <Rectangle width="1" height="470" color="0xffffff1a" translation="[640,100]" />
+
+    <!-- ================= CLT ================= -->
+
+    <Label text="HORÁRIO DO CLT" width="560" horizAlign="center" color="0x8fb8ffff" translation="[40,112]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="25" />
+    </Label>
+
+    <Label text="SAÍDA DO EXPEDIENTE" width="560" horizAlign="center" color="0x8a93a8ff" translation="[40,150]">
+      <Font role="font" uri="font:SystemFontFile" size="15" />
+    </Label>
+
+    <Label text="18:00" width="560" horizAlign="center" color="0xdfe4f0ff" translation="[40,180]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="92" />
+    </Label>
+
+    <Rectangle width="300" height="1" color="0x4f9dff70" translation="[170,306]" />
+
+    <Label text="TEMPO RESTANTE" width="560" horizAlign="center" color="0x8fb8ffff" translation="[40,326]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="16" />
+    </Label>
+
+    <Label id="cltH" text="00" width="130" horizAlign="center" color="0xeef1f8ff" translation="[110,356]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="76" />
+    </Label>
+    <Label text=":" width="20" horizAlign="center" color="0xffffff59" translation="[238,362]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="66" />
+    </Label>
+    <Label id="cltM" text="00" width="130" horizAlign="center" color="0xeef1f8ff" translation="[255,356]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="76" />
+    </Label>
+    <Label text=":" width="20" horizAlign="center" color="0xffffff59" translation="[382,362]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="66" />
+    </Label>
+    <Label id="cltS" text="00" width="130" horizAlign="center" color="0xeef1f8ff" translation="[400,356]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="76" />
+    </Label>
+
+    <Label text="HORAS" width="130" horizAlign="center" color="0x8fb8ffcc" translation="[110,452]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+    <Label text="MINUTOS" width="130" horizAlign="center" color="0x8fb8ffcc" translation="[255,452]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+    <Label text="SEGUNDOS" width="130" horizAlign="center" color="0x8fb8ffcc" translation="[400,452]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+
+    <Rectangle width="500" height="76" color="0x4f9dff14" translation="[70,496]" />
+    <Label id="cltMsg" width="460" height="76" horizAlign="center" vertAlign="center" wrap="true"
+           color="0x8fb8ffff" translation="[90,496]">
+      <Font role="font" uri="font:SystemFontFile" size="17" />
+    </Label>
+
+    <!-- ================= LOUCOS ================= -->
+
+    <Label text="HORÁRIO DOS LOUCOS" width="560" horizAlign="center" color="0xf6c86aff" translation="[680,112]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="25" />
+    </Label>
+
+    <Label id="loucosSub" width="560" horizAlign="center" color="0x8a93a8ff" translation="[680,150]">
+      <Font role="font" uri="font:SystemFontFile" size="15" />
+    </Label>
+
+    <Label text="00:00" width="560" horizAlign="center" color="0xdfe4f0ff" translation="[680,180]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="92" />
+    </Label>
+
+    <Rectangle width="300" height="1" color="0xf2b54480" translation="[810,306]" />
+
+    <Label text="TEMPO RESTANTE" width="560" horizAlign="center" color="0xf6c86aff" translation="[680,326]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="16" />
+    </Label>
+
+    <Label id="loucosH" text="00" width="130" horizAlign="center" color="0xeef1f8ff" translation="[750,356]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="76" />
+    </Label>
+    <Label text=":" width="20" horizAlign="center" color="0xffffff59" translation="[878,362]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="66" />
+    </Label>
+    <Label id="loucosM" text="00" width="130" horizAlign="center" color="0xeef1f8ff" translation="[895,356]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="76" />
+    </Label>
+    <Label text=":" width="20" horizAlign="center" color="0xffffff59" translation="[1022,362]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="66" />
+    </Label>
+    <Label id="loucosS" text="00" width="130" horizAlign="center" color="0xeef1f8ff" translation="[1040,356]">
+      <Font role="font" uri="font:SystemBoldFontFile" size="76" />
+    </Label>
+
+    <Label text="HORAS" width="130" horizAlign="center" color="0xf6c86ad9" translation="[750,452]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+    <Label text="MINUTOS" width="130" horizAlign="center" color="0xf6c86ad9" translation="[895,452]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+    <Label text="SEGUNDOS" width="130" horizAlign="center" color="0xf6c86ad9" translation="[1040,452]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+
+    <Rectangle width="500" height="76" color="0xf2b5441a" translation="[710,496]" />
+    <Label id="loucosMsg" width="460" height="76" horizAlign="center" vertAlign="center" wrap="true"
+           color="0xf6c86aff" translation="[730,496]">
+      <Font role="font" uri="font:SystemFontFile" size="17" />
+    </Label>
+
+    <!-- ================= rodape ================= -->
+
+    <Label text="DISCIPLINA TODOS OS DIAS." width="1280" horizAlign="center" color="0x9aa4bb8c" translation="[0,612]">
+      <Font role="font" uri="font:SystemFontFile" size="14" />
+    </Label>
+    <Label text="EXCELÊNCIA SEMPRE." width="1280" horizAlign="center" color="0x9aa4bb8c" translation="[0,636]">
+      <Font role="font" uri="font:SystemFontFile" size="14" />
+    </Label>
+    <Label text="#INSPIRESUCESSO" width="1280" horizAlign="center" color="0xf6c86ae6" translation="[0,662]">
+      <Font role="font" uri="font:SystemFontFile" size="13" />
+    </Label>
+
+  </children>
+</component>
